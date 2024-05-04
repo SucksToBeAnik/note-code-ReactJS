@@ -136,7 +136,7 @@ const FolderList = ({
   );
 };
 
-const SingleFolder = ({ folder, contentType }) => {
+const SingleFolder = ({ folder, contentType }:{folder:RecordModel,contentType:"NOTE"|"CODE"}) => {
   const [scope, animate] = useAnimate();
   const [showFolderContent, setShowFolderContent] = useState<boolean>(false);
   const [showContentCreateForm, setShowContentCreateForm] = useState(false);

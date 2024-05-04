@@ -8,15 +8,12 @@ import { loginFromStore } from "../../store/slices/authSlice";
 import { AiOutlineLogin } from "react-icons/ai";
 import { ImSpinner } from "react-icons/im";
 
-
 const Navbar = () => {
-  
-
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(
     (state: RootState) => state.authReducer.isLoggedIn
   );
-  const { mutate, isPending, isError, isIdle } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginWithGithub,
     onSuccess: () => {
@@ -26,7 +23,6 @@ const Navbar = () => {
 
   function handleLogin() {
     mutate();
-    
   }
 
   return (

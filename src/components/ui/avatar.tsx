@@ -15,7 +15,7 @@ interface User {
 
 const Avatar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const [user, setUser] = useState<User | null>(() => {
+  const [user] = useState<User | null>(() => {
     const userModel = pb.authStore.model;
 
     if (userModel) {

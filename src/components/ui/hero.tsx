@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HeroImage from "../../assets/hero.jpg";
-import { motion, AnimatePresence } from "framer-motion";
-import remarkGfm from "remark-gfm";
+import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 const Hero = () => {
@@ -85,11 +84,7 @@ const HeroPageMarkdown = () => {
       </div>
 
       <div className="col-span-2 h-[150px] md:h-auto md:col-span-1 text-white pl-4 border-l-4 rounded-lg">
-        <ReactMarkdown
-          className="prose text-white"
-          children={mdText}
-          remarkPlugins={[remarkGfm]}
-        />
+        <ReactMarkdown className="prose text-white" children={mdText} />
       </div>
     </>
   );

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getNoteById } from "../../server/queries/notes";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
 
 const NoteView = ({ id }: { id: string | null }) => {
