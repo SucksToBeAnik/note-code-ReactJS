@@ -83,8 +83,8 @@ const HeroPageMarkdown = () => {
         />
       </div>
 
-      <div className="col-span-2 h-[150px] md:h-auto md:col-span-1 text-white pl-4 border-l-4 rounded-lg">
-        <ReactMarkdown className="prose text-white" children={mdText} />
+      <div className="col-span-2 min-h-[150px] md:h-auto md:col-span-1 text-white pl-4 border-l-4 rounded-lg">
+        <ReactMarkdown className="prose !text-white" children={mdText} />
       </div>
     </>
   );

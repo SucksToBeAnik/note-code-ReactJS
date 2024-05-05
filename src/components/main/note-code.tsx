@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import NoteView from "./note-view";
 import CodeView from "./code-view";
+import NoteEdit from "./note-edit";
 
 const NoteCode = () => {
   const [viewEdit, setViewEdit] = useState<"VIEW" | "EDIT">("VIEW");
-  const { id, type:contentType } = useSelector(
-    (state: RootState) => state.contentReducer.contentToView
-  );
+  const {
+    contentType,
+    content
+  } = useSelector((state: RootState) => state.contentReducer.contentToView);
 
   const viewEditButtonVariants = {
     VIEW: {
@@ -45,9 +47,25 @@ const NoteCode = () => {
           Edit
         </button>
       </div>
-      {viewEdit === "VIEW" && <>
-      {contentType === "NOTE" ? <NoteView id={id} key={id} /> : <CodeView />}
-      </>}
+
+      {viewEdit === "VIEW" && (
+        <>
+          {contentType === "NOTE" ? (
+            <NoteView key={content?.id} content={content} />
+          ) : (
+            <CodeView />
+          )}
+        </>
+      )}
+      {viewEdit === "EDIT" && (
+        <>
+          {contentType === "NOTE" ? (
+            <NoteEdit key={content?.id} content={content} />
+          ) : (
+            <CodeView />
+          )}
+        </>
+      )}
     </div>
   );
 };

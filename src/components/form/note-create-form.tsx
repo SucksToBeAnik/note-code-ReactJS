@@ -5,7 +5,7 @@ import Toast from "../ui/toast";
 import { createNote } from "../../server/queries/notes";
 import { GoIssueClosed } from "react-icons/go";
 import { ImSpinner } from "react-icons/im";
-import {  useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface NoteCreateFormProps {
   folderId: string;
@@ -16,7 +16,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
   folderId,
   onCloseForm,
 }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [formError, setFormError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -30,10 +30,10 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey:['folders']
-      })
+        queryKey: ["folders"],
+      });
       setSuccess("Note added!");
-      onCloseForm()
+      onCloseForm();
     },
   });
 
@@ -45,8 +45,10 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
     const title = formData.get("title") as string;
     const body = formData.get("body") as string;
 
-    if (title.length < 4) {
+    if (title.length < 3) {
       setFormError("Title should be longer");
+    } else if (body.length < 5) {
+      setFormError("Note content should at least be 5 characters");
     } else {
       mutate({ title: title, body: body });
     }
@@ -82,6 +84,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
           <textarea
             name="body"
             id="body"
+            required
             rows={15}
             className="border-2 border-purple-700 p-2 outline-none rounded-br-full rounded shadow"
           />

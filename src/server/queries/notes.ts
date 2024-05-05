@@ -6,7 +6,6 @@ export async function getNoteById(id: string) {
     const note = await pb.collection("notes").getOne(id);
     return note;
   } catch (error: unknown) {
-    console.log(error);
     throw new Error("Something went wrong!");
   }
 }
@@ -18,7 +17,6 @@ export async function createNote(
 ) {
   try {
     const owner = pb.authStore.model;
-
 
     if (owner?.id) {
       const note = await pb.collection("notes").create({
@@ -34,10 +32,33 @@ export async function createNote(
       throw new Error("User is not logged in");
     }
   } catch (error: unknown) {
-    if(error instanceof ClientResponseError){
-      console.log(error.data);
-      throw new Error(error.data?.data?.body?.message || error.message)
+    if (error instanceof ClientResponseError) {
+      throw new Error(error.data?.data?.body?.message || error.message);
     }
+    throw new Error("Something went wrong!");
+  }
+}
+
+export async function updateNoteByID(
+  noteID: string | undefined,
+  title: string,
+  body: string
+) {
+  try {
+    if (noteID) {
+      await pb.collection("notes").update(noteID, {
+        "title": title,
+        "body": body,
+      });
+
+    } else {
+      throw new Error("Invalid note ID provided");
+    }
+  } catch (error) {
+    if (error instanceof ClientResponseError) {
+      throw new Error(error.message);
+    }
+
     throw new Error("Something went wrong!");
   }
 }

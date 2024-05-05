@@ -1,19 +1,28 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RecordModel } from "pocketbase";
 
 interface InitialState {
   contentToView: {
-    id: string | null;
-    type: "CODE" | "NOTE";
-  };
-  
+    contentType: "CODE" | "NOTE";
+    content: RecordModel | null
+  },
+  currentContent: {
+    title: string | null,
+    body: string | null
+  }
 }
+
+
 
 const initialState: InitialState = {
   contentToView: {
-    id: null,
-    type: "NOTE",
+    contentType: "NOTE",
+    content: null
   },
-  
+  currentContent:{
+    title: null,
+    body: null
+  }
 };
 
 const contentSlice = createSlice({
@@ -25,14 +34,24 @@ const contentSlice = createSlice({
       action: PayloadAction<typeof initialState.contentToView>
     ) => {
       state.contentToView = {
-        id: action.payload.id,
-        type: action.payload.type,
+        contentType: action.payload.contentType,
+        content: action.payload.content
       };
+
+      state.currentContent = {
+        title: action.payload.content?.title,
+        body: action.payload.content?.body
+      }
     },
-   
+    updateCurrentContentTitle: (state, action: PayloadAction<string>) => {
+      state.currentContent.title = action.payload
+    },
+    updateCurrentContentBody: (state, action: PayloadAction<string>) => {
+      state.currentContent.body = action.payload
+    },
   },
 });
 
-export const { setContent } = contentSlice.actions;
+export const { setContent,updateCurrentContentTitle,updateCurrentContentBody } = contentSlice.actions;
 
 export default contentSlice.reducer;
