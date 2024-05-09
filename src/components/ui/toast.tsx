@@ -18,7 +18,7 @@ const Toast: React.FC<ToastProps> = ({ msg, toastType }) => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(setToast(null));
-    }, 5000);
+    }, 3000);
   }, [dispatch]);
 
   return (
