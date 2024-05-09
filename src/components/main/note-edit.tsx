@@ -95,7 +95,7 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
           <textarea
             name="body"
             rows={13}
-            className="px-4 py-2 outline-none resize-none rounded w-full border-b-4 border-purple-700 shadow-lg"
+            className="px-4 py-2 outline-none resize-none rounded w-full border-b-4 border-purple-700 shadow-lg tracking-wide"
             value={body || ""}
             onChange={(e) => {
               dispatch(updateCurrentContentBody(e.target.value));

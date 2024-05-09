@@ -23,12 +23,12 @@ const NoteView: React.FC<NoteViewProps> = ({ content }) => {
       <>
         {content ? (
           <div className="min-h-[440px]">
-            <h1 className="text-2xl font-bold md:text-4xl">{title || ""}</h1>
+            <h1 className="text-xl font-bold md:text-4xl">{title || ""}</h1>
             <span className="text-sm text-gray-500 font-normal italic border-black">
               last updated on {content?.updated.slice(0, 16)}
             </span>
             <MarkdownPreview
-              className="m-4"
+              className="my-4"
               source={body || ""}
               style={{ backgroundColor: "transparent", color: "darkslategray" }}
             />
