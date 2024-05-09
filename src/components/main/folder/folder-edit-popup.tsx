@@ -61,7 +61,7 @@ const FodlerEditPopup: React.FC<FolderEditPopupProps> = ({
   });
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm bg-gray-700/50 z-[100]">
+    <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm bg-gray-700/50 z-[1000]">
       <motion.div initial={{scale:0}} animate={{scale:1}} className="bg-white rounded p-4 relative w-full m-1 md:w-3/5 xl:w-2/5">
         <div className="grid grid-cols-2 gap-2 my-4">
           <button

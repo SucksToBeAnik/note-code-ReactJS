@@ -77,7 +77,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
   }
 
   return (
-    <div className="flex justify-center items-center bg-gray-800/90 backdrop-blur-sm z-[500] fixed inset-0">
+    <div className="flex justify-center items-center bg-gray-800/90 backdrop-blur-sm z-[1000] fixed inset-0">
       <motion.form
         onSubmit={handleNoteCreate}
         initial={{ scale: 0 }}

@@ -16,18 +16,18 @@ const FolderBar = () => {
   const [folders, setFolders] = useState<RecordModel[]>();
   const [folderType, setFolderType] = useState<"NOTE" | "CODE">("NOTE");
   const queryClient = useQueryClient();
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null);
 
   console.log(ref.current?.offsetWidth);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const folderButtonVariants = {
     NOTE: {
       x: 0,
     },
     CODE: {
-      x: ref.current?.offsetWidth ,
+      x: ref.current?.offsetWidth,
     },
   };
 
@@ -40,10 +40,12 @@ const FolderBar = () => {
     mutationKey: ["folders"],
     mutationFn: createFolder,
     onError: (error) => {
-      return dispatch(setToast({
-        msg: error.message,
-        type:"ERROR"
-      }))
+      return dispatch(
+        setToast({
+          msg: error.message,
+          type: "ERROR",
+        })
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -72,11 +74,11 @@ const FolderBar = () => {
         )}
       </div>
       <div className="grid grid-cols-2">
-        <div className="col-span-1 relative z-20" ref={ref}>
+        <div className="col-span-1 relative z-20 text-white" ref={ref}>
           <button
             onClick={() => setFolderType("NOTE")}
-            className={`text-white ${
-              folderType === "NOTE" && " !text-black"
+            className={`${
+              folderType === "NOTE" && "text-black"
             } rounded p-2 z-20 `}
           >
             NoteFolder
@@ -89,8 +91,8 @@ const FolderBar = () => {
         </div>
         <button
           onClick={() => setFolderType("CODE")}
-          className={`text-white ${
-            folderType === "CODE" && "!text-black"
+          className={`${
+            folderType === "CODE" && "text-black"
           } rounded p-2 col-span-1 z-20`}
         >
           CodeFolder
@@ -104,10 +106,8 @@ const FolderBar = () => {
       ) : (
         <FolderList folders={folders} contentType={folderType} />
       )}
-
     </div>
   );
 };
-
 
 export default FolderBar;

@@ -57,7 +57,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleMenu }) => {
   }
 
   return (
-    <div className="fixed inset-0 h-screen w-screen">
+    <div className="fixed top-0 left-0 h-screen w-screen">
     <div className="flex justify-center items-start bg-purple-700 text-white h-full">
       <div className="mt-52">
         {/* login or logout */}

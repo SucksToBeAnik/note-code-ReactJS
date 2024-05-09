@@ -56,7 +56,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="container max-w-screen-xl mx-auto flex justify-between items-center p-4 rounded mt-4 mb-8 shadow sticky top-0 bg-white z-[100]">
+    <div className="container max-w-screen-xl mx-auto flex justify-between items-center p-4 rounded mt-4 mb-8 shadow sticky top-0 bg-white z-[500]">
       {/* icon */}
       <div className="flex justify-center items-center gap-2">
         <FaRegFileCode className="text-3xl" />
@@ -92,7 +92,7 @@ const Navbar = () => {
       </div>
 
       {/* hamburger for small screen */}
-      <div className="md:hidden z-[100] fixed right-4 top-8">
+      <div className="md:hidden">
         <div
           onClick={() => {
             if (showMneu === "SHOW") {
@@ -101,7 +101,7 @@ const Navbar = () => {
               setShowMenu("SHOW");
             }
           }}
-          className="space-y-1 w-8 h-10 z-[150] relative cursor-pointer"
+          className="space-y-1 w-8 h-10 relative cursor-pointer z-[10]"
         >
           <motion.div
             variants={topVariants}
