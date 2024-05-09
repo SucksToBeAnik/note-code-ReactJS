@@ -77,14 +77,14 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
   }
 
   return (
-    <div className="flex justify-center items-center fixed inset-0 bg-gray-800/90 backdrop-blur-sm z-[500]">
+    <div className="flex justify-center items-center bg-gray-800/90 backdrop-blur-sm z-[500] fixed inset-0">
       <motion.form
         onSubmit={handleNoteCreate}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.1, duration: 0.2 }}
         action=""
-        className="bg-white w-full m-1 sm:w-3/5 h-full rounded-xl shadow p-8 relative"
+        className="bg-white w-full m-4 sm:w-3/5 min-h-full rounded-xl shadow p-8 relative"
       >
         <IoIosCloseCircleOutline
           onClick={onCloseForm}
@@ -131,6 +131,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
       </motion.form>
       
     </div>
+   
   );
 };
 

@@ -20,7 +20,7 @@ const Toast: React.FC<ToastProps> = ({ msg, toastType }) => {
       initial={{ y: 20 }}
       animate={{ y: 0 }}
       transition={{duration:0.1}}
-      className={`absolute z-[2000] bottom-4 right-4 rounded text-white text-sm min-w-40 ${
+      className={`absolute z-[2000] top-4 left-auto md:bottom-4 md:right-4 rounded text-white text-sm min-w-40 ${
         toastType === "ERROR" && "bg-red-500"
       } ${toastType === "SUCCESS" && "bg-emerald-500"}`}
     >
