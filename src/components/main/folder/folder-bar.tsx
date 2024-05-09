@@ -7,22 +7,21 @@ import { RecordModel } from "pocketbase";
 import { motion } from "framer-motion";
 
 import { ImSpinner } from "react-icons/im";
-import Toast from "../../ui/toast";
 
 import FolderList from "./folder-list";
+import { useDispatch } from "react-redux";
+import { setToast } from "../../../store/slices/toastSlice";
 
 const FolderBar = () => {
   const [folders, setFolders] = useState<RecordModel[]>();
   const [folderType, setFolderType] = useState<"NOTE" | "CODE">("NOTE");
   const queryClient = useQueryClient();
 
-  const [folderCreateError, setFolderCreateError] = useState<string | null>(
-    null
-  );
+  const dispatch = useDispatch()
 
   const folderButtonVariants = {
     NOTE: {
-      x: 3,
+      x: 0,
     },
     CODE: {
       x: 130,
@@ -38,7 +37,10 @@ const FolderBar = () => {
     mutationKey: ["folders"],
     mutationFn: createFolder,
     onError: (error) => {
-      setFolderCreateError(error.message);
+      return dispatch(setToast({
+        msg: error.message,
+        type:"ERROR"
+      }))
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -79,7 +81,7 @@ const FolderBar = () => {
           <motion.div
             variants={folderButtonVariants}
             animate={folderType}
-            className="rounded shadow bg-white absolute col-span-1 inset-0 -z-10"
+            className="rounded-xl shadow bg-white absolute col-span-1 inset-0 -z-10"
           ></motion.div>
         </div>
         <button
@@ -97,13 +99,6 @@ const FolderBar = () => {
         <FolderList folders={folders} contentType={folderType} />
       )}
 
-      {folderCreateError && (
-        <Toast
-          msg={folderCreateError}
-          toastType="ERROR"
-          onCloseToast={() => setFolderCreateError(null)}
-        />
-      )}
     </div>
   );
 };

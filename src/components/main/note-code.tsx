@@ -23,8 +23,8 @@ const NoteCode = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-start items-center gap-8 text-md font-semibold m-4">
+    <div className="m-4">
+      <div className="flex justify-start items-center gap-8 text-md font-semibold mb-4">
         <button
           onClick={() => setViewEdit("VIEW")}
           className={`relative py-2 px-4 ${

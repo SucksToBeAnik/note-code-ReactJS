@@ -62,3 +62,14 @@ export async function updateNoteByID(
     throw new Error("Something went wrong!");
   }
 }
+
+
+export async function deleteNoteByID(id:string){
+  try{
+    await pb.collection('notes').delete(id)
+  }catch(error:unknown){
+    if(error instanceof ClientResponseError){
+      throw new Error(error.message)
+    }
+  }
+}

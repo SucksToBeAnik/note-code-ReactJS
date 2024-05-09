@@ -1,7 +1,8 @@
 import { useState } from "react";
 import HeroImage from "../../assets/hero.jpg";
 import { motion } from "framer-motion";
-import ReactMarkdown from "react-markdown";
+
+import MarkdownPreview from '@uiw/react-markdown-preview';
 
 const Hero = () => {
   const text = "With minimal steps";
@@ -16,11 +17,17 @@ const Hero = () => {
         transition={{ duration: 0.3 }}
         className="md:row-span-2 col-span-1 bg-purple-800 rounded-md text-white p-4 pl-8 place-content-center rounded-r-full"
       >
-        <h1 className="text-2xl md:text-6xl tracking-wider mb-2">
-          Take useful notes
+        <h1 className="text-2xl md:text-6xl tracking-wider mb-2 md:mb-4">
+          Take useful{" "}
+          <span className="bg-white text-black p-1 rounded shadow border-2 text-sm md:text-3xl border-black uppercase">
+            notes
+          </span>
         </h1>
         <h1 className="text-2xl md:text-5xl tracking-wider mb-8 ">
-          Write complex codes
+          Write complex{" "}
+          <span className="bg-zinc-200 text-black p-1 rounded shadow border-2 text-sm md:text-3xl border-black uppercase">
+            codes
+          </span>
         </h1>
         <p className=" pl-4 border-l-4 text-md overflow-hidden md:text-2xl font-semibold">
           {Array.from(text).map((char, idx) => {
@@ -70,7 +77,7 @@ const HeroPageMarkdown = () => {
 
   return (
     <>
-      <div className="col-span-2 md:col-span-1 ">
+      <div className="col-span-2 md:col-span-1 gap-2">
         <h1 className="text-2xl font-semibold uppercase mb-3">
           Markdown Support
         </h1>
@@ -78,13 +85,13 @@ const HeroPageMarkdown = () => {
           onChange={(e) => setMdText(e.target.value)}
           defaultValue={mdText}
           rows={5}
-          className="w-full rounded shadow outline-none text-black p-2"
+          className="w-full border-b-4 border-white bg-transparent shadow-lg outline-none text-white p-2 resize-none"
           placeholder="Write Something..."
         />
       </div>
 
-      <div className="col-span-2 min-h-[150px] md:h-auto md:col-span-1 text-white pl-4 border-l-4 rounded-lg">
-        <ReactMarkdown className="prose !text-white" children={mdText} />
+      <div className="col-span-2 min-h-[150px] md:h-auto md:col-span-1 text-white pl-4 border-l-2 mx-2">
+        <MarkdownPreview source={mdText} style={{backgroundColor: "transparent"}} />
       </div>
     </>
   );

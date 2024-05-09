@@ -4,25 +4,23 @@ import { RecordModel } from "pocketbase";
 interface InitialState {
   contentToView: {
     contentType: "CODE" | "NOTE";
-    content: RecordModel | null
-  },
+    content: RecordModel | null;
+  };
   currentContent: {
-    title: string | null,
-    body: string | null
-  }
+    title: string | null;
+    body: string | null;
+  };
 }
-
-
 
 const initialState: InitialState = {
   contentToView: {
     contentType: "NOTE",
-    content: null
+    content: null,
   },
-  currentContent:{
+  currentContent: {
     title: null,
-    body: null
-  }
+    body: null,
+  },
 };
 
 const contentSlice = createSlice({
@@ -35,23 +33,39 @@ const contentSlice = createSlice({
     ) => {
       state.contentToView = {
         contentType: action.payload.contentType,
-        content: action.payload.content
+        content: action.payload.content,
       };
 
       state.currentContent = {
         title: action.payload.content?.title,
-        body: action.payload.content?.body
-      }
+        body: action.payload.content?.body,
+      };
+    },
+    resetContent: (state) => {
+      state.contentToView = {
+        contentType: state.contentToView.contentType,
+        content: null,
+      };
+
+      state.currentContent = {
+        title: null,
+        body: null,
+      };
     },
     updateCurrentContentTitle: (state, action: PayloadAction<string>) => {
-      state.currentContent.title = action.payload
+      state.currentContent.title = action.payload;
     },
     updateCurrentContentBody: (state, action: PayloadAction<string>) => {
-      state.currentContent.body = action.payload
+      state.currentContent.body = action.payload;
     },
   },
 });
 
-export const { setContent,updateCurrentContentTitle,updateCurrentContentBody } = contentSlice.actions;
+export const {
+  setContent,
+  resetContent,
+  updateCurrentContentTitle,
+  updateCurrentContentBody,
+} = contentSlice.actions;
 
 export default contentSlice.reducer;

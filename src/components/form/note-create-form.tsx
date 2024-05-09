@@ -1,11 +1,13 @@
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { motion } from "framer-motion";
-import { FormEvent, useState } from "react";
-import Toast from "../ui/toast";
+import { FormEvent} from "react";
 import { createNote } from "../../server/queries/notes";
 import { GoIssueClosed } from "react-icons/go";
 import { ImSpinner } from "react-icons/im";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch} from "react-redux";
+
+import { setToast } from "../../store/slices/toastSlice";
 
 interface NoteCreateFormProps {
   folderId: string;
@@ -16,9 +18,9 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
   folderId,
   onCloseForm,
 }) => {
+  const dispatch = useDispatch();
+
   const queryClient = useQueryClient();
-  const [formError, setFormError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const { mutate, isPending: isLoading } = useMutation({
     mutationKey: ["notes"],
@@ -26,13 +28,23 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
       return createNote(folderId, title, body);
     },
     onError: (error) => {
-      setFormError(error.message);
+      dispatch(
+        setToast({
+          msg: error.message,
+          type: "ERROR",
+        })
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["folders"],
       });
-      setSuccess("Note added!");
+      dispatch(
+        setToast({
+          msg: "Note added!",
+          type: "SUCCESS",
+        })
+      );
       onCloseForm();
     },
   });
@@ -46,9 +58,19 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
     const body = formData.get("body") as string;
 
     if (title.length < 3) {
-      setFormError("Title should be longer");
+      dispatch(
+        setToast({
+          msg: "Title should be longer",
+          type: "ERROR",
+        })
+      );
     } else if (body.length < 5) {
-      setFormError("Note content should at least be 5 characters");
+      dispatch(
+        setToast({
+          msg: "Note content should at least be 5 characters",
+          type: "ERROR",
+        })
+      );
     } else {
       mutate({ title: title, body: body });
     }
@@ -62,7 +84,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
         animate={{ scale: 1 }}
         transition={{ delay: 0.1, duration: 0.2 }}
         action=""
-        className="bg-white w-4/5 md:w-3/5 rounded-xl shadow p-4 relative"
+        className="bg-white w-4/5 md:w-3/5 rounded-xl shadow p-8 relative"
       >
         <IoIosCloseCircleOutline
           onClick={onCloseForm}
@@ -71,22 +93,28 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
         <h1 className="text-center text-xl font-bold mb-4">Create Note</h1>
 
         <div className="flex flex-col gap-2 mb-4">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title" className="text-xl font-semibold">
+            Title
+          </label>
           <input
             required
             type="text"
             name="title"
-            className="border-2 border-purple-700  rounded p-2 outline-none shadow"
+            placeholder="Add a title..."
+            className="border-b-4 border-purple-700 p-2 outline-none shadow-xl"
           />
         </div>
         <div className="flex flex-col gap-2 mb-4">
-          <label htmlFor="body">Content</label>
+          <label htmlFor="body" className="text-xl font-semibold">
+            Content
+          </label>
           <textarea
             name="body"
             id="body"
             required
             rows={15}
-            className="border-2 border-purple-700 p-2 outline-none rounded-br-full rounded shadow"
+            placeholder="Write something..."
+            className="border-b-4 rounded border-purple-700 p-2 outline-none resize-none shadow-xl"
           />
         </div>
 
@@ -101,21 +129,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
           </button>
         </div>
       </motion.form>
-
-      {formError && (
-        <Toast
-          msg={formError}
-          toastType="ERROR"
-          onCloseToast={() => setFormError(null)}
-        />
-      )}
-      {success && (
-        <Toast
-          msg={success}
-          toastType="SUCCESS"
-          onCloseToast={() => setSuccess(null)}
-        />
-      )}
+      
     </div>
   );
 };

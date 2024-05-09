@@ -1,8 +1,8 @@
-import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 import { RecordModel } from "pocketbase";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 interface NoteViewProps {
   content: RecordModel | null;
@@ -18,16 +18,20 @@ const NoteView: React.FC<NoteViewProps> = ({ content }) => {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.1 }}
-      className="p-4 border-2 border-black rounded m-2"
+      className="p-4 shadow-lg rounded border-l-4 border-black/70"
     >
       <>
         {content ? (
           <div className="min-h-[440px]">
-            <ReactMarkdown className="prose mb-1" children={title || ""} />
-            <span className="text-sm font-normal italic pl-4 border-l-2 border-black">
-              Last updated on{" "}{content?.updated}
+            <h1 className="text-2xl font-bold md:text-4xl">{title || ""}</h1>
+            <span className="text-sm text-gray-500 font-normal italic border-black">
+              last updated on {content?.updated.slice(0, 16)}
             </span>
-            <ReactMarkdown className="prose my-4" children={body || ""} />
+            <MarkdownPreview
+              className="m-4"
+              source={body || ""}
+              style={{ backgroundColor: "transparent", color: "darkslategray" }}
+            />
           </div>
         ) : (
           <p>No note selected</p>

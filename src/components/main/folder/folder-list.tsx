@@ -9,13 +9,13 @@ const FolderList = ({
   contentType: "NOTE" | "CODE";
 }) => {
   return (
-    <div className="mt-4 p-2 bg-white text-black rounded space-y-4">
+    <div className="mt-4 p-1 text-black rounded space-y-2">
       {folders.length === 0 && (
         <p className="text-gray-600 text-sm">No folders</p>
       )}
       {folders.map((folder, idx) => {
         return (
-          <div key={idx} className="border-b-2 ">
+          <div key={idx} className="flex flex-col">
             <SingleFolder folder={folder} contentType={contentType} />
           </div>
         );

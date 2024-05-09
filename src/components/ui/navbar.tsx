@@ -7,8 +7,12 @@ import { loginWithGithub } from "../../server/queries/auth";
 import { loginFromStore } from "../../store/slices/authSlice";
 import { AiOutlineLogin } from "react-icons/ai";
 import { ImSpinner } from "react-icons/im";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import MenuBar from "./menubar";
 
 const Navbar = () => {
+  const [showMneu, setShowMenu] = useState<"SHOW" | "HIDE">("HIDE");
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(
     (state: RootState) => state.authReducer.isLoggedIn
@@ -25,6 +29,32 @@ const Navbar = () => {
     mutate();
   }
 
+  const topVariants = {
+    SHOW: {
+      rotate: 45,
+    },
+    HIDE: {
+      rotate: 0,
+    },
+  };
+  const midVariants = {
+    SHOW: {
+      opacity: 0,
+    },
+    HIDE: {
+      opacity: 1,
+    },
+  };
+
+  const bottomVariants = {
+    SHOW: {
+      rotate: -45,
+    },
+    HIDE: {
+      rotate: 0,
+    },
+  };
+
   return (
     <div className="container max-w-screen-xl mx-auto flex justify-between items-center p-4 rounded mt-4 mb-8 shadow">
       {/* icon */}
@@ -37,10 +67,11 @@ const Navbar = () => {
           </span>
         </span>
       </div>
-      {/* searchbar fro bug screen */}
-      <div>
+      {/* searchbar fro big screen */}
+      <div className="hidden md:block">
         <input />
       </div>
+
       {/* Login/Logout for big screen */}
       <div className="hidden md:block">
         {isLoggedIn ? (
@@ -61,6 +92,44 @@ const Navbar = () => {
       </div>
 
       {/* hamburger for small screen */}
+      <div className="md:hidden z-[100]">
+        <div
+          onClick={() => {
+            if (showMneu === "SHOW") {
+              setShowMenu("HIDE");
+            } else {
+              setShowMenu("SHOW");
+            }
+          }}
+          className="space-y-1 w-8 h-10 z-[150] relative cursor-pointer"
+        >
+          <motion.div
+            variants={topVariants}
+            animate={showMneu}
+            className={`h-[3px] w-8 rounded origin-left shadow-xl ${
+              showMneu === "SHOW"
+                ? "bg-white border-2 border-black p-[1px]"
+                : "bg-purple-700"
+            }`}
+          ></motion.div>
+          <motion.div
+            variants={midVariants}
+            animate={showMneu}
+            className={`h-[3px] w-8 rounded bg-purple-700`}
+          ></motion.div>
+          <motion.div
+            variants={bottomVariants}
+            animate={showMneu}
+            className={`h-[3px] w-8 rounded origin-left ${
+              showMneu === "SHOW"
+                ? "bg-white border-2 border-black p-[1px]"
+                : "bg-purple-700"
+            }`}
+          ></motion.div>
+        </div>
+
+        {showMneu === "SHOW" && <MenuBar toggleMenu={setShowMenu} />}
+      </div>
     </div>
   );
 };

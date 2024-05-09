@@ -40,7 +40,7 @@ const SingleContent: React.FC<SingleContentProps> = ({
     >
       {contentType === "NOTE" ? <CiFileOn /> : <FaRegFileCode />}
       <div className="flex justify-between items-center w-full">
-        <h1>{content.title}</h1>
+        <h1 className="text-sm text-black/60">{content.title}</h1>
         {isPending && (
           <ImSpinner className="animate-[spin_linear_2s_infinite] w-4 text-xl" />
         )}
