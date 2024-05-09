@@ -60,7 +60,7 @@ const ContentDeleteConfirmation: React.FC<ContentDeleteConfirmationProps> = ({
   }
 
   return (
-    <div className="absolute inset-0 flex justify-center items-center backdrop:blur-sm z-50 bg-gray-600/80">
+    <div className="fixed inset-0 flex justify-center items-center backdrop:blur-sm z-50 bg-gray-600/80">
       <div className="p-4 pt-6 rounded bg-white relative">
         <p className="text-xl mb-3">Are you sure you want to delete this?</p>
         <button

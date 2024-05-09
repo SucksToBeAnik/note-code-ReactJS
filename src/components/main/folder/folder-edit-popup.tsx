@@ -61,7 +61,7 @@ const FodlerEditPopup: React.FC<FolderEditPopupProps> = ({
 
   return (
     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm bg-gray-700/50 z-[100]">
-      <div className="bg-white rounded p-4 relative min-w-[500px]">
+      <div className="bg-white rounded p-4 relative w-4/5 md:w-3/5 xl:w-2/5">
         <div className="grid grid-cols-2 gap-2 my-4">
           <button
             onClick={() => setShowEditDelete("EDIT")}

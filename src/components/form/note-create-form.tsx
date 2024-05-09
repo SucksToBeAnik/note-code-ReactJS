@@ -84,7 +84,7 @@ const NoteCreateForm: React.FC<NoteCreateFormProps> = ({
         animate={{ scale: 1 }}
         transition={{ delay: 0.1, duration: 0.2 }}
         action=""
-        className="bg-white w-4/5 md:w-3/5 rounded-xl shadow p-8 relative"
+        className="bg-white w-full sm:w-3/5 rounded-xl shadow p-8 relative"
       >
         <IoIosCloseCircleOutline
           onClick={onCloseForm}
