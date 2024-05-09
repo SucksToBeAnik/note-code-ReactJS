@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CiCirclePlus } from "react-icons/ci";
 
 import { createFolder, getFolders } from "../../../server/queries/folders";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RecordModel } from "pocketbase";
 import { motion } from "framer-motion";
 
@@ -16,6 +16,9 @@ const FolderBar = () => {
   const [folders, setFolders] = useState<RecordModel[]>();
   const [folderType, setFolderType] = useState<"NOTE" | "CODE">("NOTE");
   const queryClient = useQueryClient();
+  const ref = useRef<HTMLDivElement>(null)
+
+  console.log(ref.current?.offsetWidth);
 
   const dispatch = useDispatch()
 
@@ -24,7 +27,7 @@ const FolderBar = () => {
       x: 0,
     },
     CODE: {
-      x: 130,
+      x: ref.current?.offsetWidth ,
     },
   };
 
@@ -56,8 +59,8 @@ const FolderBar = () => {
   }, [data, isSuccess]);
 
   return (
-    <div className="rounded p-2 shadow bg-purple-700 text-white min-h-[550px] mx-4">
-      <div className="flex justify-center items-center gap-1 mb-6">
+    <div className="rounded p-2 shadow bg-purple-700 text-white min-h-[550px] m-4">
+      <div className="flex justify-center items-center gap-1 mb-6 mt-4">
         <h1 className="text-xl font-bold">Folder</h1>
         {isPending ? (
           <ImSpinner className="animate-[spin_linear_2s_infinite]" />
@@ -69,7 +72,7 @@ const FolderBar = () => {
         )}
       </div>
       <div className="grid grid-cols-2">
-        <div className="col-span-1 relative z-20">
+        <div className="col-span-1 relative z-20" ref={ref}>
           <button
             onClick={() => setFolderType("NOTE")}
             className={`text-white ${
@@ -94,7 +97,10 @@ const FolderBar = () => {
         </button>
       </div>
       {isLoading || !folders ? (
-        <div>Loading...</div>
+        <div className="flex justify-start items-center gap-1 mt-4">
+          <span>Getting folders</span>
+          <ImSpinner className="animate-[spin_linear_2s_infinite]" />
+        </div>
       ) : (
         <FolderList folders={folders} contentType={folderType} />
       )}

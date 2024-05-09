@@ -11,6 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setToast } from "../../../store/slices/toastSlice";
 import { CiTrash } from "react-icons/ci";
+import { motion } from "framer-motion";
 
 interface FolderEditPopupProps {
   folder: RecordModel;
@@ -61,7 +62,7 @@ const FodlerEditPopup: React.FC<FolderEditPopupProps> = ({
 
   return (
     <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm bg-gray-700/50 z-[100]">
-      <div className="bg-white rounded p-4 relative w-4/5 md:w-3/5 xl:w-2/5">
+      <motion.div initial={{scale:0}} animate={{scale:1}} className="bg-white rounded p-4 relative w-full m-1 md:w-3/5 xl:w-2/5">
         <div className="grid grid-cols-2 gap-2 my-4">
           <button
             onClick={() => setShowEditDelete("EDIT")}
@@ -120,10 +121,10 @@ const FodlerEditPopup: React.FC<FolderEditPopupProps> = ({
 
           {showEditDelete === "DELETE" && (
             <div>
-              <p className="text-lg font-semibold pl-2 border-l-2">Are you sure you want to delete this folder?</p>
+              <p className="text-lg font-medium pl-2 border-l-2">Are you sure you want to delete this folder?</p>
               <div
                 onClick={() => handleDeleteFolder()}
-                className="border-2 rounded border-black bg-black relative w-32 h-10 mt-8"
+                className="border-2 rounded border-black bg-black relative w-32 h-10 mt-10"
               >
                 <button className="bg-red-400 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none flex justify-center items-center gap-1 disabled:cursor-not-allowed">
                   <span>Delete</span>
@@ -137,7 +138,7 @@ const FodlerEditPopup: React.FC<FolderEditPopupProps> = ({
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

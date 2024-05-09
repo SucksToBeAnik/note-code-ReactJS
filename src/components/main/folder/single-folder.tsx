@@ -20,10 +20,11 @@ const SingleFolder:React.FC<SingleFolderProps> = ({
     const [showFolderEdit, setShowFolderEdit] = useState(false)
     const [scope, animate] = useAnimate();
     const [showFolderContent, setShowFolderContent] = useState<boolean>(false);
-    const [showContentCreateForm, setShowContentCreateForm] = useState(false);
+    const [showNoteCreateForm, setShowNoteCreateForm] = useState(false);
+    // const [showCodeCreateForm, setShowCodeCreateForm] = useState(false);
   
-    function handleSwitchContentCreateForm() {
-      setShowContentCreateForm((prev) => !prev);
+    function handleSwitchNoteCreateForm() {
+      setShowNoteCreateForm((prev) => !prev);
     }
   
     function handleExpand() {
@@ -58,13 +59,13 @@ const SingleFolder:React.FC<SingleFolderProps> = ({
   
           {/* show content create pop up */}
           <CiCirclePlus
-            onClick={handleSwitchContentCreateForm}
+            onClick={handleSwitchNoteCreateForm}
             className="text-2xl cursor-pointer hover:-translate-y-[2px] hover:scale-105 active:scale-90 transition-all"
           />
-          {showContentCreateForm && contentType === "NOTE" && (
+          {showNoteCreateForm && contentType === "NOTE" && (
             <NoteCreateForm
               folderId={folder.id}
-              onCloseForm={handleSwitchContentCreateForm}
+              onCloseForm={handleSwitchNoteCreateForm}
             />
           )}
         </motion.div>

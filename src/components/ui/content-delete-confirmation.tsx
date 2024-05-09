@@ -7,6 +7,7 @@ import { ImSpinner } from "react-icons/im";
 import { resetContent } from "../../store/slices/contentSlice";
 import { useDispatch } from "react-redux";
 import { setToast } from "../../store/slices/toastSlice";
+import { motion } from "framer-motion";
 
 interface ContentDeleteConfirmationProps {
   contentID: string;
@@ -61,8 +62,8 @@ const ContentDeleteConfirmation: React.FC<ContentDeleteConfirmationProps> = ({
 
   return (
     <div className="fixed inset-0 flex justify-center items-center backdrop:blur-sm z-50 bg-gray-600/80">
-      <div className="p-4 pt-6 rounded bg-white relative">
-        <p className="text-xl mb-3">Are you sure you want to delete this?</p>
+      <motion.div initial={{scale:0}} animate={{scale:1}} className="p-8 rounded bg-white relative w-full md:w-3/5 m-1">
+        <p className="text-xl font-medium mb-3 text-center">Are you sure you want to delete this?</p>
         <button
           onClick={handleDelete}
           className="bg-red-400 w-28 p-1 rounded text-white mx-auto block "
@@ -73,7 +74,7 @@ const ContentDeleteConfirmation: React.FC<ContentDeleteConfirmationProps> = ({
             {isPending ? (
               <ImSpinner className="animate-[spin_linear_2s_infinite] w-4 text-2xl" />
             ) : (
-              <CiTrash className="w-4 text-2xl font-bold" />
+              <CiTrash className="w-5 h-5 inline-block text-2xl font-bold" />
             )}
           </p>
         </button>
@@ -82,7 +83,7 @@ const ContentDeleteConfirmation: React.FC<ContentDeleteConfirmationProps> = ({
           className="absolute right-1 top-1 text-2xl cursor-pointer"
           onClick={closeShowDeleteConfirmation}
         />
-      </div>
+      </motion.div>
     </div>
   );
 };

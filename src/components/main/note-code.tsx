@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import NoteView from "./note-view";
@@ -8,24 +8,26 @@ import NoteEdit from "./note-edit";
 
 const NoteCode = () => {
   const [viewEdit, setViewEdit] = useState<"VIEW" | "EDIT">("VIEW");
-  const {
-    contentType,
-    content
-  } = useSelector((state: RootState) => state.contentReducer.contentToView);
+  const { contentType, content } = useSelector(
+    (state: RootState) => state.contentReducer.contentToView
+  );
+
+  const ref = useRef<HTMLButtonElement>(null);
 
   const viewEditButtonVariants = {
     VIEW: {
       x: 0,
     },
     EDIT: {
-      x: 80,
+      x: ref.current?.offsetWidth,
     },
   };
 
   return (
     <div className="m-4">
-      <div className="flex justify-start items-center gap-8 text-md font-semibold mb-4">
+      <div className="flex justify-start items-center gap-4 text-md font-semibold mb-4">
         <button
+          ref={ref}
           onClick={() => setViewEdit("VIEW")}
           className={`relative py-2 px-4 ${
             viewEdit === "VIEW" && "text-white"

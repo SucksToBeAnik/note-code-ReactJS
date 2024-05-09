@@ -140,7 +140,7 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
           )}
         </>
       ) : (
-        <p className="border-l-4 border-black/70 rounded p-4 shadow-lg">No note selected</p>
+        <p className="border-l-4 border-black/70 rounded p-4 shadow-lg w-full">No note selected</p>
       )}
     </motion.form>
   );
