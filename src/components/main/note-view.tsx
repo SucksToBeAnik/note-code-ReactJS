@@ -18,7 +18,7 @@ const NoteView: React.FC<NoteViewProps> = ({ content }) => {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.1 }}
-      className="p-4 shadow-lg rounded border-l-4 border-black/70"
+      className="p-4 shadow rounded border-b-4"
     >
       <>
         {content ? (

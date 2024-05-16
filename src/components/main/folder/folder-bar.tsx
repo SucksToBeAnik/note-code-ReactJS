@@ -72,6 +72,7 @@ const FolderBar = () => {
     <div className="rounded p-2 shadow bg-purple-700 text-white m-4 relative">
       <motion.span
         onClick={() => {
+          setFolderType("NOTE");
           return setShowFolderBarContent((prev) => !prev);
         }}
         ref={scope}
@@ -93,7 +94,12 @@ const FolderBar = () => {
       </div>
 
       {showFolderBarContent && (
-        <motion.div layout initial={{y:-100}} animate={{y:0}} transition={{duration:0.1}}>
+        <motion.div
+          layout
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.1 }}
+        >
           <div className="grid grid-cols-2">
             <div className="col-span-1 relative z-20 text-white" ref={ref}>
               <button

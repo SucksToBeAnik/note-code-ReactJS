@@ -5,6 +5,7 @@ import { RootState } from "../../store";
 import NoteView from "./note-view";
 import CodeView from "./code-view";
 import NoteEdit from "./note-edit";
+import CodeEdit from "./code-edit";
 
 const NoteCode = () => {
   const [viewEdit, setViewEdit] = useState<"VIEW" | "EDIT">("VIEW");
@@ -13,6 +14,7 @@ const NoteCode = () => {
   );
 
   const ref = useRef<HTMLButtonElement>(null);
+
 
   const viewEditButtonVariants = {
     VIEW: {
@@ -55,7 +57,7 @@ const NoteCode = () => {
           {contentType === "NOTE" ? (
             <NoteView key={content?.id} content={content} />
           ) : (
-            <CodeView />
+            <CodeView key={content?.id} code={content} />
           )}
         </>
       )}
@@ -64,7 +66,7 @@ const NoteCode = () => {
           {contentType === "NOTE" ? (
             <NoteEdit key={content?.id} content={content} />
           ) : (
-            <CodeView />
+            <CodeEdit key={content?.id} code={content} />
           )}
         </>
       )}

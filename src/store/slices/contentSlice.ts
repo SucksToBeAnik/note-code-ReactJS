@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RecordModel } from "pocketbase";
 
+
+export type CodeLanguage = "javascript" | "python" | "typescript"
+
 interface InitialState {
   contentToView: {
     contentType: "CODE" | "NOTE";
@@ -9,6 +12,7 @@ interface InitialState {
   currentContent: {
     title: string | null;
     body: string | null;
+    language?: CodeLanguage
   };
 }
 
@@ -23,6 +27,8 @@ const initialState: InitialState = {
   },
 };
 
+
+
 const contentSlice = createSlice({
   name: "content",
   initialState,
@@ -35,10 +41,10 @@ const contentSlice = createSlice({
         contentType: action.payload.contentType,
         content: action.payload.content,
       };
-
       state.currentContent = {
         title: action.payload.content?.title,
         body: action.payload.content?.body,
+        language: action.payload.content?.language,
       };
     },
     resetContent: (state) => {
@@ -50,6 +56,7 @@ const contentSlice = createSlice({
       state.currentContent = {
         title: null,
         body: null,
+        language: undefined
       };
     },
     updateCurrentContentTitle: (state, action: PayloadAction<string>) => {
@@ -58,6 +65,9 @@ const contentSlice = createSlice({
     updateCurrentContentBody: (state, action: PayloadAction<string>) => {
       state.currentContent.body = action.payload;
     },
+    updateCurrentContentLanguage: (state, action: PayloadAction<CodeLanguage>)=>{
+      state.currentContent.language = action.payload
+    }
   },
 });
 
@@ -66,6 +76,7 @@ export const {
   resetContent,
   updateCurrentContentTitle,
   updateCurrentContentBody,
+  updateCurrentContentLanguage
 } = contentSlice.actions;
 
 export default contentSlice.reducer;
