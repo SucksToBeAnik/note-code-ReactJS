@@ -30,11 +30,11 @@ const FolderContent = ({
             )}
           </>
         ) : (
-          <>
+          <div className="space-y-2">
             {contents.map((content, idx) => {
               return <SingleContent key={idx} content={content} contentType={contentType} />
             })}
-          </>
+          </div>
         )}
       </motion.div>
     );

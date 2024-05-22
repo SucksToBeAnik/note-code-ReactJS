@@ -18,7 +18,9 @@ import { updateCodeByID } from "../../server/queries/codes";
 import { FaTerminal } from "react-icons/fa";
 import { ImSpinner } from "react-icons/im";
 import { BsPencilSquare } from "react-icons/bs";
+import { FaRegTrashCan } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import ContentDeleteConfirmation from "../ui/content-delete-confirmation";
 
 interface CodeEditProps {
   code: RecordModel | null;
@@ -35,6 +37,8 @@ const CodeEdit: React.FC<CodeEditProps> = ({ code }) => {
     output: string;
     language: string;
   } | null>(null);
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const { mutate: mutateRunCode, isPending: isCodeRunning } = useMutation({
     mutationKey: ["runCode"],
@@ -182,89 +186,120 @@ const CodeEdit: React.FC<CodeEditProps> = ({ code }) => {
   }
 
   return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2 }}
-    >
-      <div className="relative mb-4">
-        <input
-          type="text"
-          onChange={(e) => dispatch(updateCurrentContentTitle(e.target.value))}
-          value={currentContent.title || ""}
-          className="p-4 shadow border-b-4 border-b-purple-700 w-full rounded focus:outline-none"
-          placeholder="Update title"
-        />
-        <select
-          id="select-example"
-          name="select-example"
-          onChange={(e) =>
-            dispatch(
-              updateCurrentContentLanguage(e.target.value as CodeLanguage)
-            )
-          }
-          defaultValue={currentContent.language}
-          className="block p-2 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md absolute right-2 top-2 h-2/3"
+    <>
+      {code ? (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.2 }}
         >
-          <option value={"python"}>Python</option>
-          <option value={"javascript"}>Javascript</option>
-          <option value={"typescript"}>Typescript</option>
-        </select>
-      </div>
+          <div className="relative mb-4">
+            <input
+              type="text"
+              onChange={(e) =>
+                dispatch(updateCurrentContentTitle(e.target.value))
+              }
+              value={currentContent.title || ""}
+              className="p-4 shadow border-b-4 border-b-purple-700 w-full rounded focus:outline-none"
+              placeholder="Update title"
+            />
+            <select
+              id="select-example"
+              name="select-example"
+              onChange={(e) =>
+                dispatch(
+                  updateCurrentContentLanguage(e.target.value as CodeLanguage)
+                )
+              }
+              defaultValue={currentContent.language}
+              className="block p-2 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md absolute right-2 top-2 h-2/3"
+            >
+              <option value={"python"}>Python</option>
+              <option value={"javascript"}>Javascript</option>
+              <option value={"typescript"}>Typescript</option>
+            </select>
+          </div>
 
-      <Editor
-        height={"50vh"}
-        language={currentContent.language}
-        value={currentContent.body || ""}
-        theme="vs-dark"
-        onMount={handleEditorMount}
-        onChange={(value) => value && dispatch(updateCurrentContentBody(value))}
-      />
+          <Editor
+            height={"50vh"}
+            language={currentContent.language}
+            value={currentContent.body || ""}
+            theme="vs-dark"
+            onMount={handleEditorMount}
+            onChange={(value) =>
+              value && dispatch(updateCurrentContentBody(value))
+            }
+          />
 
-      <div className="flex justify-start items-center gap-8">
-        <div className="border-2 rounded border-black bg-black relative w-32 h-10 mt-4">
-          <button
-            onClick={handleRunCode}
-            type="button"
-            className="bg-purple-700 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
-          >
-            <div className="flex justify-center items-center gap-2">
-              <span>Run Code</span>
-              {isCodeRunning ? (
-                <ImSpinner className="animate-[spin_linear_2s_infinite]" />
-              ) : (
-                <FaTerminal />
-              )}
+          <div className="flex justify-start items-center gap-8">
+            <div className="border-2 rounded border-black bg-black relative w-32 h-10 mt-4">
+              <button
+                onClick={handleRunCode}
+                type="button"
+                className="bg-purple-700 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
+              >
+                <div className="flex justify-center items-center gap-2">
+                  <span>Run Code</span>
+                  {isCodeRunning ? (
+                    <ImSpinner className="animate-[spin_linear_2s_infinite]" />
+                  ) : (
+                    <FaTerminal />
+                  )}
+                </div>
+              </button>
             </div>
-          </button>
-        </div>
-        <div className="border-2 rounded border-black bg-black relative w-32 h-10 mt-4">
-          <button
-            onClick={handleUpdate}
-            type="button"
-            className="bg-purple-700 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
-          >
-            <div className="flex justify-center items-center gap-2">
-              <span>Update</span>
-              {isCodeUpdating ? (
-                <ImSpinner className="animate-[spin_linear_2s_infinite]" />
-              ) : (
-                <BsPencilSquare />
-              )}
+            <div className="border-2 rounded border-black bg-black relative w-32 h-10 mt-4">
+              <button
+                onClick={handleUpdate}
+                type="button"
+                className="bg-purple-700 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
+              >
+                <div className="flex justify-center items-center gap-2">
+                  <span>Update</span>
+                  {isCodeUpdating ? (
+                    <ImSpinner className="animate-[spin_linear_2s_infinite]" />
+                  ) : (
+                    <BsPencilSquare />
+                  )}
+                </div>
+              </button>
             </div>
-          </button>
-        </div>
-      </div>
 
-      {codeOutput && (
-        <CodeOutput
-          handleCloseOutput={() => setShowCodeOutput(null)}
-          output={codeOutput.output}
-          success={codeOutput.success}
-          language={codeOutput.language}
-        />
+            <div className="border-2 rounded border-black bg-black relative w-32 h-10 mt-4">
+              <button
+                onClick={() => setShowDeleteConfirm(true)}
+                type="button"
+                className="bg-red-400 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
+              >
+                <div className="flex justify-center items-center gap-2">
+                  <span>Delete</span>
+                  <FaRegTrashCan />
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {showDeleteConfirm && (
+            <ContentDeleteConfirmation
+              contentID={code.id}
+              contnetType="CODE"
+              closeShowDeleteConfirmation={() => setShowDeleteConfirm(false)}
+            />
+          )}
+
+          {codeOutput && (
+            <CodeOutput
+              handleCloseOutput={() => setShowCodeOutput(null)}
+              output={codeOutput.output}
+              success={codeOutput.success}
+              language={codeOutput.language}
+            />
+          )}
+        </motion.div>
+      ) : (
+        <p className="border-b-4  rounded p-4 w-full">No content selected</p>
       )}
-    </motion.div>
+    </>
   );
 };
 

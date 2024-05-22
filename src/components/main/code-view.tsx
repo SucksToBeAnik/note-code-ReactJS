@@ -34,7 +34,7 @@ const CodeView: React.FC<CodeViewProps> = ({ code }) => {
             </code>
           </div>
         ) : (
-          <p className="w-full">No code selected</p>
+          <p className="w-full">No content selected</p>
         )}
       </>
     </motion.div>

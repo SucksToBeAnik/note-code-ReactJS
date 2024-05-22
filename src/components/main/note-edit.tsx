@@ -124,7 +124,7 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
               <button
                 onClick={() => setShowDeleteConfirm(true)}
                 type="button"
-                className="bg-purple-700 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
+                className="bg-red-400 text-white rounded absolute w-32 h-10 -left-2 -top-2 hover:inset-0 shadow-xl transition-all border-2 border-black focus:outline-none"
               >
                 Delete
               </button>
@@ -140,7 +140,7 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
           )}
         </>
       ) : (
-        <p className="border-l-4 border-black/70 rounded p-4 shadow-lg w-full">No note selected</p>
+        <p className="border-b-4 rounded p-4 shadow w-full">No content selected</p>
       )}
     </motion.form>
   );

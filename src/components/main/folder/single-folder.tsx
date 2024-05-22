@@ -80,7 +80,7 @@ const SingleFolder: React.FC<SingleFolderProps> = ({ folder, contentType }) => {
             onCloseForm={handleSwitchContentCreateForm}
           />
         )}
-        {showCodeCreateForm && <CodeCreateForm />}
+        {showCodeCreateForm && <CodeCreateForm folderId={folder.id} onCloseForm={handleSwitchContentCreateForm} />}
       </motion.div>
 
       {showFolderContent && (

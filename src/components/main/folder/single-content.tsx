@@ -38,7 +38,7 @@ const SingleContent: React.FC<SingleContentProps> = ({
       onClick={() => handleSelectContent({ contentID: content.id })}
       className="flex justify-start items-center gap-1 cursor-pointer"
     >
-      {contentType === "NOTE" ? <CiFileOn /> : <FaRegFileCode />}
+      {contentType === "NOTE" ? <CiFileOn /> : <FaRegFileCode className="w-4 h-4 font-light" />}
       <div className="flex justify-between items-center w-full">
         <h1 className="text-sm text-black/60">{content.title}</h1>
         {isPending && (

@@ -68,9 +68,9 @@ const Navbar = () => {
         </span>
       </div>
       {/* searchbar fro big screen */}
-      <div className="hidden md:block">
+      {/* <div className="hidden md:block">
         <input />
-      </div>
+      </div> */}
 
       {/* Login/Logout for big screen */}
       <div className="hidden md:block">

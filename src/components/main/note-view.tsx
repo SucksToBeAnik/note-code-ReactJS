@@ -34,7 +34,7 @@ const NoteView: React.FC<NoteViewProps> = ({ content }) => {
             />
           </div>
         ) : (
-          <p className="w-full">No note selected</p>
+          <p className="w-full">No content selected</p>
         )}
       </>
     </motion.div>
