@@ -6,7 +6,7 @@ import {
   updateCurrentContentTitle,
   updateCurrentContentBody,
 } from "../../store/slices/contentSlice";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateNoteByID } from "../../server/queries/notes";
 import { FormEvent, useState } from "react";
 import { ImSpinner } from "react-icons/im";
@@ -19,6 +19,7 @@ interface NoteEditProps {
 }
 
 const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -38,6 +39,9 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
       return updateNoteByID(content?.id, newTitle, newBody);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["folders"],
+      });
       dispatch(
         setToast({
           msg: "Note updated!",
@@ -140,7 +144,9 @@ const NoteEdit: React.FC<NoteEditProps> = ({ content }) => {
           )}
         </>
       ) : (
-        <p className="border-b-4 rounded p-4 shadow w-full">No content selected</p>
+        <p className="border-b-4 rounded p-4 shadow w-full">
+          No content selected
+        </p>
       )}
     </motion.form>
   );

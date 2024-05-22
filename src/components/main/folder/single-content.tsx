@@ -36,7 +36,7 @@ const SingleContent: React.FC<SingleContentProps> = ({
   return (
     <div
       onClick={() => handleSelectContent({ contentID: content.id })}
-      className="flex justify-start items-center gap-1 cursor-pointer"
+      className="flex justify-start items-start gap-2 cursor-pointer"
     >
       {contentType === "NOTE" ? <CiFileOn /> : <FaRegFileCode className="w-4 h-4 font-light" />}
       <div className="flex justify-between items-center w-full">

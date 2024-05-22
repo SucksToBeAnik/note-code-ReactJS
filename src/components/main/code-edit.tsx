@@ -12,7 +12,7 @@ import {
 } from "../../store/slices/contentSlice";
 import { runCode, type RunCodeProps } from "../../server/piston_api";
 import { setToast } from "../../store/slices/toastSlice";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CodeOutput from "./code-output";
 import { updateCodeByID } from "../../server/queries/codes";
 import { FaTerminal } from "react-icons/fa";
@@ -27,6 +27,7 @@ interface CodeEditProps {
 }
 
 const CodeEdit: React.FC<CodeEditProps> = ({ code }) => {
+  const queryClient = useQueryClient()
   const currentContent = useSelector(
     (state: RootState) => state.contentReducer.currentContent
   );
@@ -68,6 +69,10 @@ const CodeEdit: React.FC<CodeEditProps> = ({ code }) => {
       language: CodeLanguage;
     }) => updateCodeByID(code?.id, data),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey:['folders']
+      })
+      
       return dispatch(
         setToast({
           msg: "Code updated",

@@ -11,6 +11,8 @@ const CodeView: React.FC<CodeViewProps> = ({ code }) => {
   const currentContent = useSelector(
     (state: RootState) => state.contentReducer.currentContent
   );
+
+  console.log(currentContent.body);
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -26,8 +28,8 @@ const CodeView: React.FC<CodeViewProps> = ({ code }) => {
               last updated on {code?.updated.slice(0, 16)}
             </span>
 
-            <code className="mt-4 p-4 pt-8 rounded-xl bg-black text-white block relative">
-              {currentContent.body}
+            <code className="mt-4 p-4 pt-8 rounded-xl bg-black text-white block relative text-nowrap">
+              <pre>{currentContent.body}</pre>
               <span className="absolute top-2 right-2 p-1 rounded bg-white text-black text-sm">
                 {currentContent.language}
               </span>
